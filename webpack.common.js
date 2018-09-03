@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const output = 'dist'
 
@@ -48,12 +49,18 @@ module.exports = {
 				}
 			}
 		}, {
+			test: /\.css$/,
+			use: ['style-loader', 'css-loader']
+		}, {
 			test: /\.(png|svg|jpg|gif)$/,
 			use: ['file-loader']
+		}, {
+			test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
+			use: ['file-loader?outputPath=files/']
 		}]
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js', '.jsx']
+		extensions: ['.tsx', '.ts', '.js', '.jsx', '.css']
 	},
 	plugins: [
 		new CleanWebpackPlugin([output]),
@@ -63,6 +70,9 @@ module.exports = {
 			meta: {
 				viewport: 'width=device-width,height=device-height,inital-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
 			}
+		}),
+		new ForkTsCheckerWebpackPlugin({
+			tslint: true
 		})
 	],
 	output: {
