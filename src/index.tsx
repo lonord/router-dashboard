@@ -1,5 +1,6 @@
 import 'normalize.css'
 import 'typeface-roboto'
+import './style/global.css'
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'

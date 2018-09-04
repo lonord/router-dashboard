@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader'
-import AppBar from './component/AppBar'
+import Frame from './component/Frame'
 
 class App extends React.Component<any, any> {
 	public render() {
 		return (
 			<>
-				<AppBar/>
+				<Frame/>
 			</>
 		)
 	}
