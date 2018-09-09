@@ -50,7 +50,8 @@ module.exports = merge(common, {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
-			'SERVER_ADDR': JSON.stringify('http://192.168.4.1')
+			'SERVER_ADDR': JSON.stringify('http://192.168.4.1'),
+			'PKG_VERSION': JSON.stringify('development version')
 		})
 	]
 })

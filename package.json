@@ -5,7 +5,8 @@
   "description": "A dashboard site for services running on router, including router-service ss-redir-service etc.",
   "scripts": {
     "dev": "webpack-dev-server --open 'Google Chrome' --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "deploy": "npm run build && rsync -r --delete --progress dist/* root@pi-router.local:/root/docker/container/nginx/home/www/router-dashboard/"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "@babel/preset-env": "7.0.0",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.0.0",
+    "@types/classnames": "^2.2.6",
     "@types/react": "^16.4.12",
     "@types/react-dom": "^16.0.7",
     "babel-loader": "^8.0.0-beta.2",
@@ -53,6 +55,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.1",
     "@material-ui/icons": "^3.0.1",
+    "classnames": "^2.2.6",
     "normalize.css": "^8.0.0",
     "typeface-roboto": "0.0.54"
   }

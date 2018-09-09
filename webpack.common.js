@@ -65,10 +65,13 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin([output]),
 		new HtmlWebpackPlugin({
-			title: 'title',
+			title: 'Router Dashboard',
 			filename: 'index.html',
 			meta: {
-				viewport: 'width=device-width,height=device-height,inital-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
+				viewport: 'width=device-width,height=device-height,inital-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no',
+				'apple-mobile-web-app-capable': 'yes',
+				'apple-mobile-web-app-title': 'Router Dashboard',
+				'apple-mobile-web-app-status-bar-style': 'black'
 			}
 		}),
 		new ForkTsCheckerWebpackPlugin({
