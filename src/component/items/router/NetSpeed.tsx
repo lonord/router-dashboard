@@ -21,7 +21,10 @@ const styles: StyleRulesCallback<string> = theme => ({
 	},
 	netSpeedColumn: {
 		padding: '5px',
-		flexBasis: '50%'
+		flexBasis: '50%',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '12px'
+		}
 	},
 	netSpeedColumnSpeed: {
 		fontSize: '50px',
@@ -42,7 +45,7 @@ const styles: StyleRulesCallback<string> = theme => ({
 	netSpeedIconSize: {
 		fontSize: '24px',
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '14px'
+			fontSize: '12px'
 		}
 	}
 })
