@@ -1,13 +1,14 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
 import IconButton from '@material-ui/core/IconButton'
 import Paper from '@material-ui/core/Paper'
-import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
+import { StyleRulesCallback, withStyles, WithStyles, WithTheme } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
+import withWidth, { isWidthUp, WithWidth } from '@material-ui/core/withWidth'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { httpGet } from '../../../util/http'
@@ -23,12 +24,12 @@ const styles: StyleRulesCallback<string> = theme => ({
 		paddingBottom: '10px'
 	},
 	tableWrap: {
-		overflowX: 'auto',
-		overflowY: 'hidden',
 		paddingBottom: '10px'
 	},
 	tableCell: {
-		padding: '4px 26px 4px 24px'
+		[theme.breakpoints.down('xs')]: {
+			padding: '4px 16px 4px 12px'
+		}
 	},
 	progressWrap: {
 		textAlign: 'center'
@@ -55,7 +56,7 @@ interface ClientsPaperState {
 	loading: boolean
 }
 
-class ClientsPaper extends React.Component<any, ClientsPaperState> {
+class ClientsPaper extends React.Component<WithStyles & WithWidth, ClientsPaperState> {
 
 	state = {
 		clientsData: [],
@@ -79,7 +80,7 @@ class ClientsPaper extends React.Component<any, ClientsPaperState> {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, width } = this.props
 		const { clientsData, loading } = this.state
 		return (
 			<Paper elevation={1} className={classes.paper}>
@@ -103,7 +104,9 @@ class ClientsPaper extends React.Component<any, ClientsPaperState> {
 									<TableRow>
 										<TableCell classes={{ root: classes.tableCell }}>Host</TableCell>
 										<TableCell classes={{ root: classes.tableCell }}>IP</TableCell>
-										<TableCell classes={{ root: classes.tableCell }}>MAC</TableCell>
+										{isWidthUp('sm', width)
+											? <TableCell classes={{ root: classes.tableCell }}>MAC</TableCell>
+											: null}
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -111,7 +114,9 @@ class ClientsPaper extends React.Component<any, ClientsPaperState> {
 										<TableRow key={idx}>
 											<TableCell classes={{ root: classes.tableCell }}>{c.host}</TableCell>
 											<TableCell classes={{ root: classes.tableCell }}>{c.ip}</TableCell>
-											<TableCell classes={{ root: classes.tableCell }}>{c.mac}</TableCell>
+											{isWidthUp('sm', width)
+												? <TableCell classes={{ root: classes.tableCell }}>{c.mac}</TableCell>
+												: null}
 										</TableRow>
 									))}
 								</TableBody>
@@ -124,4 +129,4 @@ class ClientsPaper extends React.Component<any, ClientsPaperState> {
 	}
 }
 
-export default withStyles(styles)(ClientsPaper)
+export default withStyles(styles)(withWidth()(ClientsPaper))

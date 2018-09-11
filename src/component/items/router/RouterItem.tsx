@@ -8,7 +8,7 @@ import NetSpeedPaper from './NetSpeed'
 
 const styles: StyleRulesCallback<string> = theme => ({
 	paperWrap: {
-		marginBottom: '24px'
+		paddingBottom: '24px'
 	}
 })
 
