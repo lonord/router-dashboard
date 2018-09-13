@@ -65,7 +65,7 @@ class SystemPaper extends React.Component<SystemPaperProps & WithStyles, {}> {
 		const { version, running, uptime, ssMode, updatingRunningStatus, updatingSSModeStatus } = store
 		return (
 			<Paper elevation={1} className={classes.paper}>
-				<div className={classes.line}>
+				<div className={classes.title}>
 					<Typography variant="subheading">Outline</Typography>
 				</div>
 				<div className={classes.line}>
