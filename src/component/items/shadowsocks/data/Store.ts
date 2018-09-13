@@ -1,7 +1,7 @@
-import { computed, configure, observable, runInAction } from 'mobx'
+import { action, computed, configure, observable, runInAction } from 'mobx'
 import { httpDel, httpGet, httpPost, httpPut } from '../../../../util/http'
 
-configure({ enforceActions: true })
+configure({ enforceActions: 'always' })
 
 const SS_API = '/ss/api'
 
@@ -35,6 +35,7 @@ export default class Store {
 		return this.updatingRunningStatus && this.updatingSSModeStatus
 	}
 
+	@action.bound
 	async reload() {
 		runInAction(() => {
 			this.updatingRunningStatus = true
@@ -52,6 +53,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async start() {
 		runInAction(() => {
 			this.updatingRunningStatus = true
@@ -66,6 +68,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async stop() {
 		runInAction(() => {
 			this.updatingRunningStatus = true
@@ -80,6 +83,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async setSSMode(mode: SSMode) {
 		runInAction(() => {
 			this.updatingSSModeStatus = true
@@ -92,6 +96,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async reloadGfwlist() {
 		runInAction(() => {
 			this.loadingGfwlist = true
@@ -103,6 +108,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async addGfwlist(domain: string) {
 		runInAction(() => {
 			this.loadingGfwlist = true
@@ -116,6 +122,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async removeGfwlist(domain: string) {
 		runInAction(() => {
 			this.loadingGfwlist = true
@@ -129,6 +136,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async reloadForwardIpList() {
 		runInAction(() => {
 			this.loadingForwardIplist = true
@@ -140,6 +148,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async addForwardIpList(ip: string) {
 		runInAction(() => {
 			this.loadingForwardIplist = true
@@ -152,6 +161,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async removeForwardIpList(ip: string) {
 		runInAction(() => {
 			this.loadingForwardIplist = true
@@ -164,6 +174,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async reloadBypassIpList() {
 		runInAction(() => {
 			this.loadingBypassIpList = true
@@ -175,6 +186,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async addBypassIpList(ip: string) {
 		runInAction(() => {
 			this.loadingBypassIpList = true
@@ -187,6 +199,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async removeBypassIpList(ip: string) {
 		runInAction(() => {
 			this.loadingBypassIpList = true
@@ -199,6 +212,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async reloadForwardClientList() {
 		runInAction(() => {
 			this.loadingForwardClientlist = true
@@ -210,6 +224,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async addForwardClientList(ip: string) {
 		runInAction(() => {
 			this.loadingForwardClientlist = true
@@ -222,6 +237,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async removeForwardClientList(ip: string) {
 		runInAction(() => {
 			this.loadingForwardClientlist = true
@@ -234,6 +250,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async reloadBypassClientList() {
 		runInAction(() => {
 			this.loadingBypassClientList = true
@@ -245,6 +262,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async addBypassClientList(ip: string) {
 		runInAction(() => {
 			this.loadingBypassClientList = true
@@ -257,6 +275,7 @@ export default class Store {
 		})
 	}
 
+	@action.bound
 	async removeBypassClientList(ip: string) {
 		runInAction(() => {
 			this.loadingBypassClientList = true

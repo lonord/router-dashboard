@@ -64,6 +64,9 @@ async function handleResult(res: Response): Promise<any> {
 	const resultData = type && type.indexOf('json') !== -1
 		? (await res.json())
 		: (await res.text())
+	if (resultData && resultData.data && typeof resultData.status === 'number') {
+		return resultData.data
+	}
 	return resultData
 }
 

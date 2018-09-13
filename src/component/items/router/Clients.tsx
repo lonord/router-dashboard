@@ -15,7 +15,7 @@ import { httpGet } from '../../../util/http'
 
 const styles: StyleRulesCallback<string> = theme => ({
 	paper: {
-		padding: '16px',
+		padding: '16px 20px',
 		[theme.breakpoints.down('xs')]: {
 			padding: '10px'
 		}
