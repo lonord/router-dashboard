@@ -1,14 +1,22 @@
 import Snackbar from '@material-ui/core/Snackbar'
+import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import NearMeIcon from '@material-ui/icons/NearMe'
 import { inject, observer, Provider } from 'mobx-react'
 import React from 'react'
 import { FrameItem } from '../../Frame'
 import Store from './data/Store'
+import IPListPaper from './IPExpansionPanels'
 import LoadingPaper from './Loading'
 import SystemPaper from './System'
 
 const store = new Store()
+
+const styles: StyleRulesCallback<string> = theme => ({
+	paperWrap: {
+		paddingBottom: '24px'
+	}
+})
 
 interface ShadowsocksContentProps {
 	store?: Store
@@ -21,7 +29,7 @@ interface ShadowsocksContentState {
 
 @inject('store')
 @observer
-class ShadowsocksContent extends React.Component<ShadowsocksContentProps, ShadowsocksContentState> {
+class ShadowsocksContent extends React.Component<ShadowsocksContentProps & WithStyles, ShadowsocksContentState> {
 
 	state = {
 		snackbarOpen: false,
@@ -47,16 +55,17 @@ class ShadowsocksContent extends React.Component<ShadowsocksContentProps, Shadow
 	}
 
 	render() {
-		const { store } = this.props
+		const { store, classes } = this.props
 		const { snackbarOpen, errorMessage } = this.state
 		const updatingSystemStatus = store ? store.updatingSystemStatus : true
 		return (
 			<div>
 				{updatingSystemStatus
 					? <LoadingPaper/>
-					: <div>
-						<SystemPaper handleError={this.handleError} />
-					</div>}
+					: <>
+						<div className={classes.paperWrap}><SystemPaper handleError={this.handleError} /></div>
+						<div className={classes.paperWrap}><IPListPaper handleError={this.handleError} /></div>
+					</>}
 				<Snackbar
 					anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 					open={snackbarOpen}
@@ -72,9 +81,11 @@ class ShadowsocksContent extends React.Component<ShadowsocksContentProps, Shadow
 	}
 }
 
+const StyledRouterContent = withStyles(styles)(ShadowsocksContent)
+
 const WrappedShadowsocksContent = () => (
 	<Provider store={store}>
-		<ShadowsocksContent/>
+		<StyledRouterContent/>
 	</Provider>
 )
 

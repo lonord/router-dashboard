@@ -18,15 +18,16 @@ export default class Store {
 	@observable gfwlist: string[] = []
 	@observable loadingGfwlist: boolean = false
 	@observable updatingStandardGfwlist: boolean = false
+	@observable standardGfwlistUpdateDate: number = 0
 
-	@observable forwardIplist: string[] = []
-	@observable loadingForwardIplist: boolean = false
+	@observable forwardIpList: string[] = []
+	@observable loadingForwardIpList: boolean = false
 
 	@observable bypassIpList: string[] = []
 	@observable loadingBypassIpList: boolean = false
 
-	@observable forwardClientlist: string[] = []
-	@observable loadingForwardClientlist: boolean = false
+	@observable forwardClientList: string[] = []
+	@observable loadingForwardClientList: boolean = false
 
 	@observable bypassClientList: string[] = []
 	@observable loadingBypassClientList: boolean = false
@@ -102,9 +103,24 @@ export default class Store {
 			this.loadingGfwlist = true
 		})
 		const list = await httpGet(`${SS_API}/gfwlist/user`)
+		const updateDate = await httpGet(`${SS_API}/gfwlist/standard/date`)
 		runInAction(() => {
 			this.gfwlist = list
 			this.loadingGfwlist = false
+			this.standardGfwlistUpdateDate = parseInt(updateDate)
+		})
+	}
+
+	@action.bound
+	async updateStandardGfwlist() {
+		runInAction(() => {
+			this.updatingStandardGfwlist = true
+		})
+		await httpPut(`${SS_API}/action/gfwlist/update`)
+		const updateDate = await httpGet(`${SS_API}/gfwlist/standard/date`)
+		runInAction(() => {
+			this.updatingStandardGfwlist = false
+			this.standardGfwlistUpdateDate = parseInt(updateDate)
 		})
 	}
 
@@ -139,38 +155,39 @@ export default class Store {
 	@action.bound
 	async reloadForwardIpList() {
 		runInAction(() => {
-			this.loadingForwardIplist = true
+			this.loadingForwardIpList = true
 		})
 		const list = await httpGet(`${SS_API}/iplist/forward`)
 		runInAction(() => {
-			this.forwardIplist = list
-			this.loadingForwardIplist = false
+			this.forwardIpList = list
+			this.loadingForwardIpList = false
 		})
 	}
 
 	@action.bound
 	async addForwardIpList(ip: string) {
 		runInAction(() => {
-			this.loadingForwardIplist = true
+			this.loadingForwardIpList = true
 		})
 		await httpPut(`${SS_API}/iplist/forward/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/iplist/forward`)
+		await this.reloadBypassIpList()
 		runInAction(() => {
-			this.forwardIplist = list
-			this.loadingForwardIplist = false
+			this.forwardIpList = list
+			this.loadingForwardIpList = false
 		})
 	}
 
 	@action.bound
 	async removeForwardIpList(ip: string) {
 		runInAction(() => {
-			this.loadingForwardIplist = true
+			this.loadingForwardIpList = true
 		})
 		await httpDel(`${SS_API}/iplist/forward/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/iplist/forward`)
 		runInAction(() => {
-			this.forwardIplist = list
-			this.loadingForwardIplist = false
+			this.forwardIpList = list
+			this.loadingForwardIpList = false
 		})
 	}
 
@@ -193,6 +210,7 @@ export default class Store {
 		})
 		await httpPut(`${SS_API}/iplist/bypass/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/iplist/bypass`)
+		await this.reloadForwardIpList()
 		runInAction(() => {
 			this.bypassIpList = list
 			this.loadingBypassIpList = false
@@ -215,38 +233,39 @@ export default class Store {
 	@action.bound
 	async reloadForwardClientList() {
 		runInAction(() => {
-			this.loadingForwardClientlist = true
+			this.loadingForwardClientList = true
 		})
 		const list = await httpGet(`${SS_API}/clientiplist/forward`)
 		runInAction(() => {
-			this.forwardClientlist = list
-			this.loadingForwardClientlist = false
+			this.forwardClientList = list
+			this.loadingForwardClientList = false
 		})
 	}
 
 	@action.bound
 	async addForwardClientList(ip: string) {
 		runInAction(() => {
-			this.loadingForwardClientlist = true
+			this.loadingForwardClientList = true
 		})
 		await httpPut(`${SS_API}/clientiplist/forward/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/clientiplist/forward`)
+		await this.reloadBypassClientList()
 		runInAction(() => {
-			this.forwardClientlist = list
-			this.loadingForwardClientlist = false
+			this.forwardClientList = list
+			this.loadingForwardClientList = false
 		})
 	}
 
 	@action.bound
 	async removeForwardClientList(ip: string) {
 		runInAction(() => {
-			this.loadingForwardClientlist = true
+			this.loadingForwardClientList = true
 		})
 		await httpDel(`${SS_API}/clientiplist/forward/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/clientiplist/forward`)
 		runInAction(() => {
-			this.forwardClientlist = list
-			this.loadingForwardClientlist = false
+			this.forwardClientList = list
+			this.loadingForwardClientList = false
 		})
 	}
 
@@ -269,6 +288,7 @@ export default class Store {
 		})
 		await httpPut(`${SS_API}/clientiplist/bypass/${encodeURIComponent(ip)}`)
 		const list = await httpGet(`${SS_API}/clientiplist/bypass`)
+		await this.reloadForwardClientList()
 		runInAction(() => {
 			this.bypassClientList = list
 			this.loadingBypassClientList = false
