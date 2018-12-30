@@ -163,6 +163,7 @@ class ResponsiveFrame extends React.Component<WithStyles & WithTheme & Responsiv
 						variant="temporary"
 						open={mobileOpen}
 						onClose={this.handleDrawerToggle}
+						onMouseUp={this.handleDrawerToggle}
 						classes={{
 							paper: classes.drawerPaper,
 							docked: classes.drawerDocked
