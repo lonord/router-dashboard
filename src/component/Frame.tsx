@@ -165,6 +165,7 @@ class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameStat
 							{items.map((item, idx) => (
 								<Route key={item.title}
 									path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+									exact={idx === 0}
 									render={({ match }) => !!match && item.title}/>
 							))}
 						</Typography>
@@ -204,6 +205,7 @@ class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameStat
 					{items.map((item, idx) => (
 						<Route key={item.title}
 							path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+							exact={idx === 0}
 							render={({ match }) => !!match && items[idx].content} />
 					))}
 				</main>
