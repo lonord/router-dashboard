@@ -13,6 +13,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
+import { Route, RouteComponentProps, withRouter } from 'react-router'
+import { matchPath } from 'react-router-dom'
+import { convertItemName } from '../util/pathutil'
 
 const drawerWidth = 250
 
@@ -66,7 +69,10 @@ const styles: StyleRulesCallback<string> = theme => ({
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
 		padding: theme.spacing.unit * 3,
-		overflowY: 'auto'
+		overflowY: 'auto',
+		[theme.breakpoints.down('xs')]: {
+			padding: theme.spacing.unit
+		}
 	}
 })
 
@@ -84,13 +90,13 @@ export interface ResponsiveFrameProps {
 
 interface ResponsiveFrameState {
 	mobileOpen: boolean
-	itemIndex: number
 }
 
-class ResponsiveFrame extends React.Component<WithStyles & WithTheme & ResponsiveFrameProps, ResponsiveFrameState> {
+type AttachedProps = WithStyles & WithTheme & ResponsiveFrameProps & RouteComponentProps
+
+class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameState> {
 	state = {
-		mobileOpen: false,
-		itemIndex: 0
+		mobileOpen: false
 	}
 
 	handleDrawerToggle = () => {
@@ -98,14 +104,16 @@ class ResponsiveFrame extends React.Component<WithStyles & WithTheme & Responsiv
 	}
 
 	handleDrawerItemClick = (index: number) => {
-		this.setState({
-			itemIndex: index
-		})
+		const { items, history } = this.props
+		const newPath = index === 0 ? '' : convertItemName(items[index].title)
+		history.push(`/${newPath}`)
 	}
 
 	render() {
-		const { classes, title, version, items } = this.props
-		const { mobileOpen, itemIndex } = this.state
+		const { classes, title, version, items, location } = this.props
+		const { mobileOpen } = this.state
+		const match = matchPath<any>(location.pathname, '/:itemPath')
+		const itemPath = match ? match.params.itemPath : convertItemName(items[0].title)
 
 		const drawer = (
 			<div>
@@ -130,7 +138,7 @@ class ResponsiveFrame extends React.Component<WithStyles & WithTheme & Responsiv
 					{items.map((item, idx) => (
 						<ListItem key={idx}
 							onClick={() => this.handleDrawerItemClick(idx)}
-							selected={idx === itemIndex} button>
+							selected={idx === findItemIndex(items, itemPath)} button>
 							<ListItemIcon>
 								{item.drawerItemIcon}
 							</ListItemIcon>
@@ -154,7 +162,11 @@ class ResponsiveFrame extends React.Component<WithStyles & WithTheme & Responsiv
 							<MenuIcon />
 						</IconButton>
 						<Typography variant="title" color="inherit" noWrap>
-							{items[itemIndex].title}
+							{items.map((item, idx) => (
+								<Route key={item.title}
+									path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+									render={({ match }) => !!match && item.title}/>
+							))}
 						</Typography>
 					</Toolbar>
 				</AppBar>
@@ -189,11 +201,25 @@ class ResponsiveFrame extends React.Component<WithStyles & WithTheme & Responsiv
 				</Hidden>
 				<main className={classes.content}>
 					<div className={classes.toolbar} />
-					{items[itemIndex].content}
+					{items.map((item, idx) => (
+						<Route key={item.title}
+							path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+							render={({ match }) => !!match && items[idx].content} />
+					))}
 				</main>
 			</div>
 		)
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(ResponsiveFrame)
+export default withStyles(styles, { withTheme: true })(withRouter(ResponsiveFrame))
+
+function findItemIndex(items: FrameItem[], itemPath: string): number {
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i]
+		if (convertItemName(item.title) === itemPath) {
+			return i
+		}
+	}
+	return -1
+}

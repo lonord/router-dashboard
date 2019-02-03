@@ -1,7 +1,7 @@
 {
   "name": "router-dashboard",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A dashboard site for services running on router, including router-service ss-redir-service etc.",
   "scripts": {
     "dev": "webpack-dev-server --open 'Google Chrome' --config webpack.dev.js",
@@ -32,16 +32,17 @@
     "@babel/preset-typescript": "7.0.0",
     "@types/classnames": "^2.2.6",
     "@types/ms": "^0.7.30",
-    "@types/react": "^16.4.12",
+    "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.7",
+    "@types/react-router-dom": "^4.3.1",
     "babel-loader": "^8.0.0-beta.2",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^0.4.2",
     "html-webpack-plugin": "^3.2.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
     "react-hot-loader": "^4.3.5",
     "style-loader": "^0.23.0",
     "tslint": "^5.11.0",
@@ -50,7 +51,7 @@
     "typescript-styled-plugin": "^0.10.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.6",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
@@ -61,6 +62,7 @@
     "mobx-react": "^5.2.8",
     "ms": "^2.1.1",
     "normalize.css": "^8.0.0",
+    "react-router-dom": "^4.3.1",
     "typeface-roboto": "0.0.54"
   }
 }

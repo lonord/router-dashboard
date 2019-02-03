@@ -2,6 +2,7 @@ import blue from '@material-ui/core/colors/blue'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as React from 'react'
 import { hot } from 'react-hot-loader'
+import { HashRouter } from 'react-router-dom'
 import Frame from './component/Frame'
 import indexItem from './component/items/overview/OverviewItem'
 import routerItem from './component/items/router/RouterItem'
@@ -20,11 +21,13 @@ class App extends React.Component<any, any> {
 	public render() {
 		return (
 			<MuiThemeProvider theme={theme}>
-				<Frame title="Router Dashboard" version={version} items={[
-					indexItem,
-					routerItem,
-					shadowsocksItem
-				]}/>
+				<HashRouter>
+					<Frame title="Router Dashboard" version={version} items={[
+						indexItem,
+						routerItem,
+						shadowsocksItem
+					]} />
+				</HashRouter>
 			</MuiThemeProvider>
 		)
 	}
