@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const output = 'dist'
 
@@ -74,9 +73,6 @@ module.exports = {
 				'apple-mobile-web-app-title': 'Router Dashboard',
 				'apple-mobile-web-app-status-bar-style': 'black'
 			}
-		}),
-		new ForkTsCheckerWebpackPlugin({
-			tslint: true
 		})
 	],
 	output: {

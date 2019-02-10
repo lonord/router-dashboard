@@ -1,6 +1,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const webpack = require('webpack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = merge(common, {
 	mode: 'development',
@@ -52,6 +53,9 @@ module.exports = merge(common, {
 			'process.env.NODE_ENV': JSON.stringify('development'),
 			'SERVER_ADDR': JSON.stringify('http://192.168.4.1'),
 			'PKG_VERSION': JSON.stringify('development version')
+		}),
+		new ForkTsCheckerWebpackPlugin({
+			tslint: true
 		})
 	]
 })
