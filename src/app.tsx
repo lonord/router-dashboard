@@ -1,5 +1,6 @@
 import blue from '@material-ui/core/colors/blue'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/styles'
 import * as React from 'react'
 import { hot } from 'react-hot-loader'
 import { HashRouter } from 'react-router-dom'
@@ -12,15 +13,26 @@ declare const PKG_VERSION: any
 const version = PKG_VERSION
 
 const theme = createMuiTheme({
+	typography: {
+		useNextVariants: true,
+		fontWeightMedium: 300,
+		button: {
+			fontWeight: 500
+		}
+	},
 	palette: {
-		primary: blue
+		primary: blue,
+		background: {
+			default: '#eee',
+			paper: 'white'
+		}
 	}
 })
 
 class App extends React.Component<any, any> {
 	public render() {
 		return (
-			<MuiThemeProvider theme={theme}>
+			<ThemeProvider theme={theme}>
 				<HashRouter>
 					<Frame title="Router Dashboard" version={version} items={[
 						indexItem,
@@ -28,7 +40,7 @@ class App extends React.Component<any, any> {
 						shadowsocksItem
 					]} />
 				</HashRouter>
-			</MuiThemeProvider>
+			</ThemeProvider>
 		)
 	}
 }

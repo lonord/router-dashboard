@@ -13,6 +13,7 @@ module.exports = {
 			'@babel/polyfill',
 		],
 		main: [
+			'./src/bootstrap.ts',
 			'./src/index.tsx',
 		],
 	},

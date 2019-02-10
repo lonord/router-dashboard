@@ -1,7 +1,3 @@
-import 'normalize.css'
-import 'typeface-roboto'
-import './style/global.css'
-
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import App from './app'
@@ -11,5 +7,8 @@ if (!rootEl) {
 	rootEl = document.createElement('div')
 	rootEl.id = 'root'
 	document.body.appendChild(rootEl)
+	const style = document.createElement('style')
+	style.innerText = `html,body,#root { height: 100%; }`
+	document.head.appendChild(style)
 }
 ReactDOM.render(<App />, rootEl)

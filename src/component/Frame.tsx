@@ -30,11 +30,9 @@ const styles: StyleRulesCallback<string> = theme => ({
 		width: '100%'
 	},
 	appBar: {
-		position: 'absolute',
-		marginLeft: drawerWidth,
-		[theme.breakpoints.up('md')]: {
-			width: `calc(100% - ${drawerWidth}px)`
-		}
+		background: 'transparent',
+		boxShadow: 'none',
+		color: theme.palette.text.primary
 	},
 	navIcon: {
 		marginLeft: -12,
@@ -45,16 +43,10 @@ const styles: StyleRulesCallback<string> = theme => ({
 	},
 	toolbar: {
 		...theme.mixins.toolbar,
-		paddingLeft: '24px'
-	},
-	toolbarTitle: {
-		paddingTop: '10px'
-	},
-	toolbarVersion: {
-		paddingTop: '5px',
-		[theme.breakpoints.down('xs')]: {
-			paddingTop: '2px'
-		}
+		paddingLeft: '24px',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center'
 	},
 	drawerDocked: {
 		height: '100%'
@@ -68,11 +60,14 @@ const styles: StyleRulesCallback<string> = theme => ({
 	content: {
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
-		padding: theme.spacing.unit * 3,
 		overflowY: 'auto',
 		[theme.breakpoints.down('xs')]: {
-			padding: theme.spacing.unit
+			padding: theme.spacing.unit,
+			paddingTop: theme.spacing.unit * 2
 		}
+	},
+	contentChildWrap: {
+		padding: theme.spacing.unit * 3
 	}
 })
 
@@ -121,15 +116,13 @@ class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameStat
 					<Typography
 						variant="title"
 						color="textSecondary"
-						noWrap={false}
-						className={classes.toolbarTitle}>
+						noWrap={false}>
 						{title}
 					</Typography>
 					<Typography
 						variant="caption"
 						color="textSecondary"
-						noWrap={false}
-						className={classes.toolbarVersion}>
+						noWrap={false}>
 						{version}
 					</Typography>
 				</div>
@@ -151,26 +144,6 @@ class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameStat
 
 		return (
 			<div className={classes.root}>
-				<AppBar className={classes.appBar}>
-					<Toolbar>
-						<IconButton
-							color="inherit"
-							aria-label="Open drawer"
-							onClick={this.handleDrawerToggle}
-							className={classes.navIcon}
-						>
-							<MenuIcon />
-						</IconButton>
-						<Typography variant="title" color="inherit" noWrap>
-							{items.map((item, idx) => (
-								<Route key={item.title}
-									path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
-									exact={idx === 0}
-									render={({ match }) => !!match && item.title}/>
-							))}
-						</Typography>
-					</Toolbar>
-				</AppBar>
 				<Hidden mdUp>
 					<Drawer
 						variant="temporary"
@@ -201,13 +174,34 @@ class ResponsiveFrame extends React.Component<AttachedProps, ResponsiveFrameStat
 					</Drawer>
 				</Hidden>
 				<main className={classes.content}>
-					<div className={classes.toolbar} />
-					{items.map((item, idx) => (
-						<Route key={item.title}
-							path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
-							exact={idx === 0}
-							render={({ match }) => !!match && items[idx].content} />
-					))}
+					<div className={classes.appBar}>
+						<Toolbar>
+							<IconButton
+								color="inherit"
+								aria-label="Open drawer"
+								onClick={this.handleDrawerToggle}
+								className={classes.navIcon}
+							>
+								<MenuIcon />
+							</IconButton>
+							<Typography variant="title" color="inherit" noWrap>
+								{items.map((item, idx) => (
+									<Route key={item.title}
+										path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+										exact={idx === 0}
+										render={({ match }) => !!match && item.title} />
+								))}
+							</Typography>
+						</Toolbar>
+					</div>
+					<div className={classes.contentChildWrap}>
+						{items.map((item, idx) => (
+							<Route key={item.title}
+								path={idx === 0 ? '/' : '/' + convertItemName(item.title)}
+								exact={idx === 0}
+								render={({ match }) => !!match && items[idx].content} />
+						))}
+					</div>
 				</main>
 			</div>
 		)
