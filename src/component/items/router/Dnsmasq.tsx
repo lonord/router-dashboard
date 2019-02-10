@@ -1,10 +1,10 @@
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
+import red from '@material-ui/core/colors/red'
 import Snackbar from '@material-ui/core/Snackbar'
 import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { httpPut } from '../../../util/http'
+import FloatTitlePaper, { Title } from '../../FloatTitlePaper'
 
 const styles: StyleRulesCallback<string> = theme => ({
 	paper: {
@@ -53,10 +53,9 @@ class DnsmasqPaper extends React.Component<WithStyles, DnsmasqPaperState> {
 		const { classes } = this.props
 		const { restarting, snackbarOpen } = this.state
 		return (
-			<Paper elevation={1} className={classes.paper}>
-				<Typography variant="subheading">Dnsmasq</Typography>
+			<FloatTitlePaper title={<Title title="Dnsmasq" />} titleBackground={red[500]}>
 				<div className={classes.buttonWrap}>
-					<Button color="primary" variant="contained"
+					<Button color="primary"
 						onClick={this.restart} disabled={restarting}>
 						{restarting
 							? 'Restarting...'
@@ -73,7 +72,7 @@ class DnsmasqPaper extends React.Component<WithStyles, DnsmasqPaperState> {
 					}}
 					message={<span id="message-id">Dnsmasq process was restarted</span>}
 				/>
-			</Paper>
+			</FloatTitlePaper>
 		)
 	}
 }

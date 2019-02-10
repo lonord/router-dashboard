@@ -1,5 +1,5 @@
+import cyan from '@material-ui/core/colors/cyan'
 import Divider from '@material-ui/core/Divider'
-import Paper from '@material-ui/core/Paper'
 import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
 import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography'
@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import ms from 'ms'
 import React from 'react'
+import FloatTitlePaper, { Title } from '../../FloatTitlePaper'
 import Store, { SSMode } from './data/Store'
 
 const styles: StyleRulesCallback<string> = theme => ({
@@ -64,10 +65,7 @@ class SystemPaper extends React.Component<SystemPaperProps & WithStyles, {}> {
 		const { classes, store } = this.props
 		const { version, running, uptime, ssMode, updatingRunningStatus, updatingSSModeStatus } = store
 		return (
-			<Paper elevation={1} className={classes.paper}>
-				<div className={classes.title}>
-					<Typography variant="subheading">Outline</Typography>
-				</div>
+			<FloatTitlePaper title={<Title title="Outline" />} titleBackground={cyan[500]}>
 				<div className={classes.line}>
 					<Typography className={classes.textLeft}>Shadowsocks Service</Typography>
 					<span className={classes.textRight}>
@@ -111,7 +109,7 @@ class SystemPaper extends React.Component<SystemPaperProps & WithStyles, {}> {
 						v{version}
 					</Typography>
 				</div>
-			</Paper>
+			</FloatTitlePaper>
 		)
 	}
 }

@@ -12,13 +12,36 @@ import shadowsocksItem from './component/items/shadowsocks/ShadowsocksItem'
 declare const PKG_VERSION: any
 const version = PKG_VERSION
 
+function createFontWeightStyle(weight: number) {
+	return {
+		fontWeight: weight
+	}
+}
+
 const theme = createMuiTheme({
 	typography: {
 		useNextVariants: true,
 		fontWeightMedium: 300,
-		button: {
-			fontWeight: 500
-		}
+		button: createFontWeightStyle(400),
+		h1: createFontWeightStyle(500),
+		h2: createFontWeightStyle(500),
+		h3: createFontWeightStyle(400),
+		h4: createFontWeightStyle(400),
+		h5: createFontWeightStyle(300),
+		h6: createFontWeightStyle(300),
+		subtitle1: createFontWeightStyle(300),
+		subtitle2: createFontWeightStyle(300),
+		body1: createFontWeightStyle(300),
+		body2: createFontWeightStyle(300),
+		caption: createFontWeightStyle(300),
+		overline: createFontWeightStyle(300),
+		display4: createFontWeightStyle(400),
+		display3: createFontWeightStyle(400),
+		display2: createFontWeightStyle(300),
+		display1: createFontWeightStyle(300),
+		headline: createFontWeightStyle(400),
+		title: createFontWeightStyle(400),
+		subheading: createFontWeightStyle(300)
 	},
 	palette: {
 		primary: blue,

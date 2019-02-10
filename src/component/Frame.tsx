@@ -60,14 +60,13 @@ const styles: StyleRulesCallback<string> = theme => ({
 	content: {
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
-		overflowY: 'auto',
-		[theme.breakpoints.down('xs')]: {
-			padding: theme.spacing.unit,
-			paddingTop: theme.spacing.unit * 2
-		}
+		overflowY: 'auto'
 	},
 	contentChildWrap: {
-		padding: theme.spacing.unit * 3
+		padding: theme.spacing.unit * 3,
+		[theme.breakpoints.down('xs')]: {
+			padding: theme.spacing.unit
+		}
 	}
 })
 

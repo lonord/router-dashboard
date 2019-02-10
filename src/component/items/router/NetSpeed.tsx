@@ -1,4 +1,4 @@
-import Paper from '@material-ui/core/Paper'
+import cyan from '@material-ui/core/colors/cyan'
 import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import CallMadeIcon from '@material-ui/icons/CallMade'
@@ -6,18 +6,14 @@ import CallReceivedIcon from '@material-ui/icons/CallReceived'
 import classNames from 'classnames'
 import React from 'react'
 import { httpListen, HttpListener } from '../../../util/http'
+import FloatTitlePaper, { Title } from '../../FloatTitlePaper'
 
 const styles: StyleRulesCallback<string> = theme => ({
-	paper: {
-		padding: '16px 20px',
-		[theme.breakpoints.down('xs')]: {
-			padding: '10px'
-		}
-	},
 	netSpeedArea: {
 		fontFamily: theme.typography.fontFamily,
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		color: theme.palette.text.disabled
 	},
 	netSpeedColumn: {
 		padding: '5px',
@@ -104,25 +100,24 @@ class NetSpeedPaper extends React.Component<WithStyles, NetSpeedPaperState> {
 		const outerSendSpeed = formatNetSpeed(outerNetSpeed.send)
 		const outerRecvSpeed = formatNetSpeed(outerNetSpeed.recv)
 		return (
-			<Paper elevation={1} className={classes.paper}>
-				<Typography variant="subheading">Network Speed</Typography>
+			<FloatTitlePaper title={<Title title="Network Speed" />} titleBackground={cyan[500]}>
 				<div className={classes.netSpeedArea}>
-					<div className={classNames(classes.netSpeedColumn, classes.netSpeedRecvStyle)}>
+					<div className={classes.netSpeedColumn}>
 						<CallReceivedIcon classes={{
-							root: classes.netSpeedIconSize
+							root: classNames(classes.netSpeedIconSize, classes.netSpeedRecvStyle)
 						}} />
-						<span className={classes.netSpeedColumnSpeed}>{outerRecvSpeed.speed}</span>
-						<span>{outerRecvSpeed.unit}</span>
+						<Typography inline className={classes.netSpeedColumnSpeed}>{outerRecvSpeed.speed}</Typography>
+						<Typography inline>{outerRecvSpeed.unit}</Typography>
 					</div>
-					<div className={classNames(classes.netSpeedColumn, classes.netSpeedSendStyle)}>
+					<div className={classes.netSpeedColumn}>
 						<CallMadeIcon classes={{
-							root: classes.netSpeedIconSize
+							root: classNames(classes.netSpeedIconSize, classes.netSpeedSendStyle)
 						}} />
-						<span className={classes.netSpeedColumnSpeed}>{outerSendSpeed.speed}</span>
-						<span>{outerSendSpeed.unit}</span>
+						<Typography inline className={classes.netSpeedColumnSpeed}>{outerSendSpeed.speed}</Typography>
+						<Typography inline>{outerSendSpeed.unit}</Typography>
 					</div>
 				</div>
-			</Paper>
+			</FloatTitlePaper>
 		)
 	}
 }

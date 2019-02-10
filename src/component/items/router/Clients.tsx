@@ -1,7 +1,7 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
+import orange from '@material-ui/core/colors/orange'
 import IconButton from '@material-ui/core/IconButton'
-import Paper from '@material-ui/core/Paper'
-import { StyleRulesCallback, withStyles, WithStyles, WithTheme } from '@material-ui/core/styles'
+import { StyleRulesCallback, withStyles, WithStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -12,6 +12,7 @@ import withWidth, { isWidthUp, WithWidth } from '@material-ui/core/withWidth'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { httpGet } from '../../../util/http'
+import FloatTitlePaper, { Title } from '../../FloatTitlePaper'
 
 const styles: StyleRulesCallback<string> = theme => ({
 	paper: {
@@ -38,9 +39,6 @@ const styles: StyleRulesCallback<string> = theme => ({
 		padding: '4px 20px'
 	},
 	refreshButton: {
-		fontSize: '16px',
-		height: '32px',
-		width: '32px',
 		marginLeft: '10px'
 	}
 })
@@ -83,8 +81,7 @@ class ClientsPaper extends React.Component<WithStyles & WithWidth, ClientsPaperS
 		const { classes, width } = this.props
 		const { clientsData, loading } = this.state
 		return (
-			<Paper elevation={1} className={classes.paper}>
-				<Typography variant="subheading" classes={{ subheading: classes.title }}>Online Clients</Typography>
+			<FloatTitlePaper title={<Title title="Online Clients" />} titleBackground={orange[500]}>
 				{loading
 					? <div className={classes.progressWrap}>
 						<CircularProgress color="primary"/>
@@ -94,7 +91,7 @@ class ClientsPaper extends React.Component<WithStyles & WithWidth, ClientsPaperS
 							<Typography variant="caption">
 								<span>{clientsData.length} items</span>
 								<IconButton classes={{ root: classes.refreshButton }} onClick={this.startLoadData}>
-									<RefreshIcon fontSize="inherit" />
+									<RefreshIcon fontSize="small" />
 								</IconButton>
 							</Typography>
 						</div>
@@ -124,7 +121,7 @@ class ClientsPaper extends React.Component<WithStyles & WithWidth, ClientsPaperS
 						</div>
 					</div>
 				}
-			</Paper>
+			</FloatTitlePaper>
 		)
 	}
 }
