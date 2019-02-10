@@ -10,5 +10,9 @@ if (!rootEl) {
 	const style = document.createElement('style')
 	style.innerText = `html,body,#root { height: 100%; }`
 	document.head.appendChild(style)
+	const link = document.createElement('link')
+	link.setAttribute('rel', 'apple-touch-icon')
+	link.setAttribute('href', '/images/logo.png')
+	document.head.appendChild(link)
 }
 ReactDOM.render(<App />, rootEl)

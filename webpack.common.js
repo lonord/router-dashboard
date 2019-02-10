@@ -53,7 +53,7 @@ module.exports = {
 			use: ['style-loader', 'css-loader']
 		}, {
 			test: /\.(png|svg|jpg|gif)$/,
-			use: ['file-loader']
+			use: ['file-loader?outputPath=images/']
 		}, {
 			test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
 			use: ['file-loader?outputPath=files/']
@@ -72,7 +72,8 @@ module.exports = {
 				'apple-mobile-web-app-capable': 'yes',
 				'apple-mobile-web-app-title': 'Router Dashboard',
 				'apple-mobile-web-app-status-bar-style': 'black'
-			}
+			},
+			favicon: './src/asset/logo.ico'
 		})
 	],
 	output: {
