@@ -1,7 +1,7 @@
 {
   "name": "router-dashboard",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A dashboard site for services running on router, including router-service ss-redir-service etc.",
   "scripts": {
     "dev": "webpack-dev-server --open 'Google Chrome' --config webpack.dev.js",
